@@ -1,0 +1,27 @@
+{% extends 'ricette/base.html' %}
+{% block content %}
+<h2 class="section-title">❤️ Le tue ricette preferite</h2>
+
+{% if preferiti %}
+<div class="card-container">
+    {% for p in preferiti %}
+    <div class="card">
+        {% if p.ricetta.immagine %}
+        <img src="{{ p.ricetta.immagine.url }}" alt="{{ p.ricetta.titolo }}">
+        {% endif %}
+        <div class="card-body">
+            <h3>{{ p.ricetta.titolo }}</h3>
+            <a href="{% url 'dettaglio_ricetta' p.ricetta.id %}" class="btn">Vedi dettagli</a>
+            <form method="post" action="{% url 'elimina_preferito' p.ricetta.id %}" style="display:inline-block; margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Rimuovi</button>
+            </form>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="no-results">Non hai ancora aggiunto preferiti.</p>
+{% endif %}
+{% endblock %}

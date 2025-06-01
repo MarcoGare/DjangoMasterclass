@@ -1,0 +1,15 @@
+{% extends 'ricette/base.html' %}
+{% block content %}
+<h2 class="section-title">🍳 Ricette di {{ concorrente.nome }} {{ concorrente.cognome }}</h2>
+<div class="card-container">
+    {% for r in ricette %}
+    <div class="card">
+        <img src="{{ r.immagine.url }}" alt="Foto Piatto" class="round-img">
+        <h3>{{ r.titolo }}</h3>
+        <a href="{% url 'dettaglio_ricetta' r.id %}" class="btn">Dettagli</a>
+    </div>
+    {% empty %}
+    <p class="no-results"> Nessuna ricetta trovata.</p>
+    {% endfor %}
+</div>
+{% endblock %}

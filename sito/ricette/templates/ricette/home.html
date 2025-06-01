@@ -1,0 +1,44 @@
+{% extends 'ricette/base.html' %}
+{% block content %}
+
+<!-- Sezione Chef (sopra hero) -->
+<section class="chef-section-over-hero">
+    <h2 class="section-title">I Nostri Chef</h2>
+    <div class="card-container over-hero">
+        {% for s in chef %}
+        <div class="card">
+            <img src="{{ s.foto.url }}" alt="Foto Chef" class="chef-image">
+            <div class="card-body">
+                <h3>{{ s.nome }} {{ s.cognome }}</h3>
+                <small>{{ s.stelle_michelin }}⭐ Michelin </small></p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- Hero -->
+<section class="hero">
+    <img src="https://upload.wikimedia.org/wikipedia/it/2/2a/Sigla_MasterChef_Italia_stagione_4.png" alt="MasterChef" class="hero-banner">
+</section>
+
+<!-- Concorrenti -->
+<section class="concorrenti-section">
+    <h2 class="section-title">I Concorrenti dell'ultimo anno</h2>
+    <div class="card-container">
+        {% for c in concorrenti %}
+        <div class="card">
+            <img src="{{ c.foto.url }}" alt="Foto Concorrente">
+            <div class="card-body">
+                <h3>{{ c.nome }} {{ c.cognome }}</h3>
+                <p>{{ c.professione }} - Età: {{ c.eta }}</p>
+                <a href="{% url 'ricette_concorrente' c.id %}" class="btn">Scopri i suoi piatti</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'ricette/base.html' %}
+{% block content %}
+<div class="dettaglio">
+    <h2>{{ ricetta.titolo }}</h2>
+    <img src="{{ ricetta.immagine.url }}" class="dettaglio-img"><br>
+    
+    <ul>
+    {% for riga in ricetta.descrizione.splitlines %}
+        <li>{{ riga }}</li>
+    {% endfor %}
+    </ul>
+
+
+
+    <h3>Concorrente</h3>
+    <div class="profilo-box">
+        <img src="{{ ricetta.concorrente.foto.url }}" alt="Foto concorrente" class="profilo-img">
+        <p>{{ ricetta.concorrente.nome }} {{ ricetta.concorrente.cognome }}<br>
+        <small>{{ ricetta.concorrente.professione }} - Età: {{ ricetta.concorrente.eta }}</small></p>
+    </div>
+
+    <h3>Giudici</h3>
+    <div class="giudici-box">
+        {% for chef in ricetta.giudici.all %}
+        <div class="giudice-card">
+            <img src="{{ chef.foto.url }}" alt="Foto giudice" class="giudice-card">
+            <p><strong>{{ chef.nome }} {{ chef.cognome }}</strong><br>
+            <small>⭐ {{ chef.stelle_michelin }} stelle Michelin</small></p>
+        </div>
+        {% empty %}
+        <p>Nessun giudizio ancora</p>
+        {% endfor %}
+    </div>
+
+
+    {% if is_preferito %}
+        <button class="btn" disabled>Già nei preferiti</button>
+    {% else %}
+        <form method="post" action="{% url 'aggiungi_preferito' ricetta.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">Aggiungi ai preferiti</button>
+        </form>
+    {% endif %}
+
+</div>
+{% endblock %}
